@@ -1,0 +1,5 @@
+[
+  { "content": "SeoaBot Online | {prefix}help", "type": "PLAYING" },
+  { "content": "{userCount} users", "type": "WATCHING" },
+  { "content": "\"{randomUser}\"", "type": "WATCHING" }
+]
