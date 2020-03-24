@@ -37,19 +37,19 @@ class Cycler {
   }
 
   add (content, author) {
-    community.push({content, author})
+    community.push({ content, author })
     this.save()
   }
 
   delete (num, author) {
-    let ii = []
+    const ii = []
     const dd = community.filter((d, i) => {
-      if(d.author === author) {
+      if (d.author === author) {
         ii.push(i)
         return true
       } else return false
     })
-    if(!dd[num]) return false
+    if (!dd[num]) return false
 
     community.splice(ii[num], 1)
     this.save()
@@ -58,7 +58,7 @@ class Cycler {
   }
 
   get (author) {
-    if(!author) return community
+    if (!author) return community
     else return community.filter((data) => data.author === author)
   }
 
