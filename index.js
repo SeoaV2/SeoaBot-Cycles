@@ -2,11 +2,11 @@ const { existsSync, writeFileSync } = require('fs')
 const path = require('path').resolve()
 const dataRoot = path + '/extensions/Cycles/data/'
 
-if (!existsSync(dataRoot + 'comunity.json')) writeFileSync(dataRoot + 'comunity.json', '["Seoa is the best"]')
+if (!existsSync(dataRoot + 'community.json')) writeFileSync(dataRoot + 'community.json', '[{"content":"Seoa is the best","author":""}]')
 
 const official = require(dataRoot + 'official.json')
-const comunity = require(dataRoot + 'comunity.json')
-let client, cycle, officialCount, comunityCount
+const community = require(dataRoot + 'community.json')
+let client, cycle, officialCount, communityCount
 
 class Cycler {
   constructor (seoa) {
@@ -16,8 +16,7 @@ class Cycler {
   }
 
   active () {
-    comunityCount = Math.floor(Math.random() * comunity.length)
-    setInterval(this.cycler, 3000)
+    setInterval(this.cycler, 5000)
   }
 
   cycler () {
@@ -28,21 +27,47 @@ class Cycler {
       if (officialCount >= official.length) officialCount = 0
       let { content, type } = official[officialCount]
 
-      content = rander(content)
+      content = render(content)
 
       client.user.setActivity(content, { type })
     } else {
-      client.user.setActivity(comunity[comunityCount])
-      comunityCount = Math.floor(Math.random() * comunity.length)
+      communityCount = Math.floor(Math.random() * community.length)
+      client.user.setActivity(community[communityCount].content)
     }
   }
 
-  add (content) {
-    comunity.push(content)
+  add (content, author) {
+    community.push({content, author})
+    this.save()
+  }
+
+  delete (num, author) {
+    let ii = []
+    const dd = community.filter((d, i) => {
+      if(d.author === author) {
+        ii.push(i)
+        return true
+      } else return false
+    })
+    if(!dd[num]) return false
+
+    community.splice(ii[num], 1)
+    this.save()
+
+    return true
+  }
+
+  get (author) {
+    if(!author) return community
+    else return community.filter((data) => data.author === author)
+  }
+
+  save () {
+    writeFileSync(dataRoot + 'community.json', JSON.stringify(community))
   }
 }
 
-function rander (string) {
+function render (string) {
   return string
     .replace('{prefix}', client.prefix)
     .replace('{userCount}', client.users.cache.size)
