@@ -1,5 +1,7 @@
 [
   { "content": "SeoaBot Online | {prefix}help", "type": "PLAYING" },
   { "content": "{userCount} users", "type": "WATCHING" },
-  { "content": "\"{randomUser}\"", "type": "WATCHING" }
+  { "content": "SeoaBot은 {prefix}help으로 이용할 수 있습니다.", "type": "PLAYING" },
+  { "content": "\"{randomUser}\"", "type": "WATCHING" },
+  { "content": "에러 발생시 서포트 서버로 ({prefix}support)", "type": "PLAYING" }
 ]
